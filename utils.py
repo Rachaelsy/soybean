@@ -19,15 +19,12 @@ def load_pickle(filename):
 def load_data(f_x, f_y):
     x = load_pickle(f_x)
     y = load_pickle(f_y)
-    y = np.array(y[:, np.newaxis])
+    # y = np.array(y[:, np.newaxis])
+    y = np.array(y)
     ssx = StandardScaler()
-    ssy = StandardScaler()
     for i in range(x.shape[-1]):
         ssx.fit(x[:, :, i])
         x[:, :, i] = ssx.transform(x[:, :, i])
-    ssy.fit(y)
-    y = ssy.transform(y)
-
     return x,y
     # train_ids, valid_ids, test_ids = get_ids_for_tvt()
     # x_train = x[train_ids]
