@@ -1,9 +1,9 @@
 rand_seed = 314
 
-model_name = 'STCN'  # ['RNN', 'GRU', 'LSTM', 'TCN', 'STCN']
+model_name = 'LSTM'  # ['RNN', 'GRU', 'LSTM', 'TCN', 'STCN']
 device = 'cpu'  # 'cpu' or 'cuda'
 input_size = 4
-hidden_size = 32
+hidden_size = 80
 output_size = 1
 num_layers = 4
 levels = 4

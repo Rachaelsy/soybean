@@ -20,12 +20,10 @@ from sklearn.model_selection import train_test_split
 
 
 def set_seed(seed):
-        random.seed(seed)
-        os.environ['PYTHONHASHSEED'] = str(seed)
-        np.random.seed(seed)
-        torch.manual_seed(seed)
-        torch.cuda.manual_seed(seed)
-        torch.backends.cudnn.deterministic = True
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
 
 
 def train(net, train_loader, test_loader):
@@ -61,6 +59,7 @@ def train(net, train_loader, test_loader):
 def main():
     # Load data
     # print('\nLoading data...\n')
+    set_seed(cfg.rand_seed)
     f_x = "./dataset/x.pkl"
     f_y = "./dataset/y.pkl"
     x, y = utils.load_data(f_x=f_x, f_y=f_y)
@@ -70,9 +69,8 @@ def main():
     trainx, testx, trainy, testy = train_test_split(x, y, test_size=0.2, random_state=129)
     train_loader = DataLoader(dataset=Mydataset(trainx,trainy,transform=transforms.ToTensor()), batch_size=12, shuffle=True)
     test_loader = DataLoader(dataset=Mydataset(testx,testy), batch_size=12, shuffle=True)
-    #net = models.SimpleLSTM(input_size=cfg.input_size, hidden_size=cfg.hidden_size, output_size=cfg.output_size, num_layers=cfg.num_layers)
+    net = models.SimpleLSTM(input_size=cfg.input_size, hidden_size=cfg.hidden_size, output_size=cfg.output_size, num_layers=cfg.num_layers)
     #net = models.TCN(input_size=cfg.input_size, output_size=cfg.output_size, num_channels=[cfg.hidden_size]*cfg.levels, kernel_size=cfg.kernel_size, dropout=cfg.dropout)
-    net = models.SimpleRNN(input_size=cfg.input_size, hidden_size=cfg.hidden_size, output_size=cfg.output_size, num_layers=cfg.num_layers)
     train(net, train_loader, test_loader)
 
 if __name__ == '__main__':
